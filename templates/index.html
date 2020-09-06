@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>SmartHome</title>
+
+        <link rel="stylesheet" href="static/css/main.css">
+
+        <script>
+            setTimeout(function(){ location.reload(); }, 600000);
+
+            function clickCamera(file) {
+                document.getElementById('zoom').src = file;
+            }
+
+            function toggle(name) {
+                const xhttp = new XMLHttpRequest();
+                xhttp.open("GET", "toggle/" + name, true);
+                xhttp.send();
+            }
+
+            function livingRoomLights(){
+                toggle("living room");
+                toggle("fireplace");
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="cameras">
+                <div class="snapshots">
+                    {%for file in files%}
+                        <div class="snapshot">
+                            <img src="{{ file }}" onClick="clickCamera('{{ file }}')"/>
+                        </div>
+                    {%endfor%}
+                </div>
+                <div class="zoom">
+                    <img src="{{ files[0] }}" id="zoom"/>
+                </div>
+                <div class="timestamp">{{ last_snapshot }}</div>
+            </div>
+            <div class="actions">
+                <div class="action">Arm</div>
+                <div class="action">Disarm</div>
+                <div class="action">Close Garage</div>
+                <div class="action">Open Garage</div>
+                <div class="action" onClick="livingRoomLights()">Living Room Lights</div>
+                <div class="action" onClick="toggle('basement')">Basement Lights</div>
+            </div>
+        </div>
+    </body>
+</html>

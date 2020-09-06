@@ -1,12 +1,12 @@
 import requests
 
 
-class Devices:
+class SmartThingsDevices:
     """ Helps traverse devices list. """
 
     @staticmethod
     def from_json(json, smart_things):
-        return Devices(
+        return SmartThingsDevices(
             list(map(
                 lambda i: Device(i, smart_things),
                 json['items']
@@ -22,7 +22,7 @@ class Devices:
         """ Return a new Devices object filtered to those with a partial name match. """
         name = name.lower()
 
-        return Devices(
+        return SmartThingsDevices(
             list(filter(
                 lambda d: name in d.label().lower(),
                 self.devices
@@ -32,7 +32,7 @@ class Devices:
 
     def with_capability(self, capability_id):
         """ Return a new Devices object filtered to those at least 1 component supporting the given capability. """
-        return Devices(
+        return SmartThingsDevices(
             list(filter(
                 lambda d: len(d.components_with_capability(capability_id)) > 0,
                 self.devices

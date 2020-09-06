@@ -1,7 +1,6 @@
 import argparse
 
-from smartthings.SmartThings import SmartThings
-
+from lib.SmartThings import SmartThings
 
 parser = argparse.ArgumentParser(description='Flip some switches.')
 parser.add_argument(

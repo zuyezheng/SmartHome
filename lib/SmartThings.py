@@ -1,6 +1,6 @@
 import requests
 
-from smartthings.Devices import Devices
+from lib.SmartThingsDevices import SmartThingsDevices
 
 
 class SmartThings:
@@ -23,7 +23,7 @@ class SmartThings:
 
         https://smartthings.developer.samsung.com/docs/api-ref/st-api.html#operation/getDevices
         """
-        return Devices.from_json(
+        return SmartThingsDevices.from_json(
             requests.get(
                 'https://api.smartthings.com/v1/devices',
                 headers=self.auth_header
