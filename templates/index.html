@@ -21,6 +21,12 @@
                 toggle("living room");
                 toggle("fireplace");
             }
+
+            function scene(name) {
+                const xhttp = new XMLHttpRequest();
+                xhttp.open("GET", "scene/" + name, true);
+                xhttp.send();
+            }
         </script>
     </head>
     <body>
@@ -39,8 +45,8 @@
                 <div class="timestamp">{{ last_snapshot }}</div>
             </div>
             <div class="actions">
-                <div class="action">Arm</div>
-                <div class="action">Disarm</div>
+                <div class="action" onClick="scene('arm')">Arm</div>
+                <div class="action" onClick="scene('disarm')">Disarm</div>
                 <div class="action">Close Garage</div>
                 <div class="action">Open Garage</div>
                 <div class="action" onClick="livingRoomLights()">Living Room Lights</div>

@@ -30,10 +30,15 @@ def home():
                 snapshots_to_find.remove(snapshot)
                 break
 
+    last_filename = most_recent[0]
+    last_timestamp = datetime.fromtimestamp(
+        float(last_filename[last_filename.rindex('_') + 1:-4])
+    )
+
     return render_template(
         'index.html',
         files=most_recent,
-        last_snapshot=datetime.fromtimestamp(float(most_recent[0][-21: -4])).strftime("%d/%m/%y %I:%M:%S %p")
+        last_snapshot=last_timestamp.strftime("%d/%m/%y %I:%M:%S %p")
     )
 
 @app.route('/toggle/<name>')
@@ -59,6 +64,18 @@ def toggle(name):
             print(f"--> Setting '{command}'.")
 
     return f'Toggled {name}.'
+
+
+@app.route('/scene/<name>')
+def scene(name):
+    smart_things = SmartThings.fromFile('token.txt')
+    scene = smart_things.scenes().with_name(name)
+
+    if scene is None:
+        return f'Scene {name} not found.'
+    else:
+        scene.execute()
+        return f'Executing scene {name}.'
 
 
 @app.route('/start-capture')
@@ -93,4 +110,4 @@ if __name__ == "__main__":
         cameras
     )
 
-    app.run()
+    app.run(host="0.0.0.0")

@@ -1,5 +1,6 @@
 import requests
 
+from lib.SmartThingsScenes import SmartThingsScenes
 from lib.SmartThingsDevices import SmartThingsDevices
 
 
@@ -31,5 +32,11 @@ class SmartThings:
             self
         )
 
-
-
+    def scenes(self):
+        return SmartThingsScenes.from_json(
+            requests.get(
+                'https://api.smartthings.com/v1/scenes',
+                headers=self.auth_header
+            ).json(),
+            self
+        )
